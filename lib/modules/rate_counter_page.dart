@@ -1,53 +1,62 @@
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/modules/rate_counter_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class RateCounterPage extends StatefulWidget {
-  const RateCounterPage({Key? key}) : super(key: key);
+  const RateCounterPage({super.key});
 
   @override
   _RateCounterPageState createState() => _RateCounterPageState();
 }
 
 class _RateCounterPageState extends State<RateCounterPage> {
-  final TextEditingController stitchRateController = TextEditingController(text: '0');
-  final TextEditingController addOnController = TextEditingController(text: '0');
+  final TextEditingController stitchRateController =
+      TextEditingController(text: '0');
+  final TextEditingController addOnController =
+      TextEditingController(text: '0');
 
-  final List<Map<String, dynamic>> items = kItems;
+  final List<Map<dynamic, dynamic>> items = kItems;
 
   double calculateTotalPrice() {
     double stitchRate = double.tryParse(stitchRateController.text) ?? 0;
     double addOnPrice = double.tryParse(addOnController.text) ?? 0;
 
     double totalPrice = items.fold(0.0, (sum, item) {
-      int stitches = item['stitches'];
-      int head = item['head'];
+      double stitches = item['stitches'] + .0;
+      double head = item['head'] + .0;
       return sum + (stitches * head * stitchRate) / 100;
     });
 
     return totalPrice + addOnPrice;
   }
 
-  Widget numberField(String label, int value, void Function(int) onChanged) {
+  Widget numberField(
+      String label, double value, void Function(double) onChanged) {
     return Row(
       children: [
         SizedBox(
           width: 40,
           child: Text(
-            value.toString(),
+            value.toStringAsFixed(1),
             textAlign: TextAlign.center,
           ),
         ),
-        Spacer(),
-        Column(mainAxisSize: MainAxisSize.min,
+        const Spacer(),
+        Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            GestureDetector(child: const Icon(Icons.arrow_drop_up),
+            GestureDetector(
+              child: const Icon(Icons.arrow_drop_up),
               onTap: () {
-                onChanged(value + 1);
-              },),
-            GestureDetector(child: const Icon(Icons.arrow_drop_down),
-              onTap: () {
-                if (value > 0) onChanged(value - 1);
-              }),
+                onChanged(value + .1);
+              },
+            ),
+            GestureDetector(
+                child: const Icon(Icons.arrow_drop_down),
+                onTap: () {
+                  if (value > 0) onChanged(value - .1);
+                }),
           ],
         ),
       ],
@@ -55,35 +64,33 @@ class _RateCounterPageState extends State<RateCounterPage> {
   }
 
   // To add arrows to the text fields (Stitch Rate and Add-on Price)
-  Widget arrowInputField(TextEditingController controller, void Function() onChanged) {
+  Widget arrowInputField(
+      TextEditingController controller, void Function() onChanged) {
     return TextField(
       controller: controller,
       keyboardType: TextInputType.number,
       onChanged: (_) => setState(() {}),
-      decoration:  InputDecoration(
-        border: OutlineInputBorder(),
-        suffixIcon: Column(
-          children: [
-            
-        GestureDetector(
-          child: const Icon(Icons.arrow_drop_up),
-          onTap: onChanged,
-        ),
-            GestureDetector(
-          child: const Icon(Icons.arrow_drop_down),
-          onTap: () {
-            setState(() {
-              double currentValue = double.tryParse(controller.text) ?? 0;
-              if (currentValue > 0) {
-                controller.text = (currentValue - 1).toString();
-              }
-            });
-          },
-        ),
-          ],
-        )
-      
-      ),
+      decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          suffixIcon: Column(
+            children: [
+              GestureDetector(
+                onTap: onChanged,
+                child: const Icon(Icons.arrow_drop_up),
+              ),
+              GestureDetector(
+                child: const Icon(Icons.arrow_drop_down),
+                onTap: () {
+                  setState(() {
+                    double currentValue = double.tryParse(controller.text) ?? 0;
+                    if (currentValue > 0) {
+                      controller.text = (currentValue - 1).toStringAsFixed(1);
+                    }
+                  });
+                },
+              ),
+            ],
+          )),
     );
   }
 
@@ -107,7 +114,8 @@ class _RateCounterPageState extends State<RateCounterPage> {
                 stitchRateController,
                 () {
                   setState(() {
-                    double currentValue = double.tryParse(stitchRateController.text) ?? 0;
+                    double currentValue =
+                        double.tryParse(stitchRateController.text) ?? 0;
                     stitchRateController.text = (currentValue + 1).toString();
                   });
                 },
@@ -126,19 +134,23 @@ class _RateCounterPageState extends State<RateCounterPage> {
                     children: [
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text('Name',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Enter Stitches', style: TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text('Enter Stitches',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Enter Head', style: TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text('Enter Head',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Total Price', style: TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text('Total Price',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
@@ -153,7 +165,7 @@ class _RateCounterPageState extends State<RateCounterPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: numberField(
                             'Stitches',
-                            item['stitches'],
+                            item['stitches'] + .0,
                             (newValue) {
                               setState(() {
                                 item['stitches'] = newValue;
@@ -165,7 +177,7 @@ class _RateCounterPageState extends State<RateCounterPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: numberField(
                             'Head',
-                            item['head'],
+                            item['head'] + .0,
                             (newValue) {
                               setState(() {
                                 item['head'] = newValue;
@@ -181,7 +193,7 @@ class _RateCounterPageState extends State<RateCounterPage> {
                         ),
                       ],
                     );
-                  }).toList(),
+                  }),
                 ],
               ),
               const SizedBox(height: 16),
@@ -194,7 +206,8 @@ class _RateCounterPageState extends State<RateCounterPage> {
                 addOnController,
                 () {
                   setState(() {
-                    double currentValue = double.tryParse(addOnController.text) ?? 0;
+                    double currentValue =
+                        double.tryParse(addOnController.text) ?? 0;
                     addOnController.text = (currentValue + 1).toString();
                   });
                 },
@@ -205,7 +218,10 @@ class _RateCounterPageState extends State<RateCounterPage> {
                 color: Colors.blue,
                 child: Text(
                   'Total Price: ₹${calculateTotalPrice().toStringAsFixed(2)}',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
               ),
