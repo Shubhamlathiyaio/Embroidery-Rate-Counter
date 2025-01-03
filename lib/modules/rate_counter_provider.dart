@@ -11,15 +11,12 @@ class RateCounter extends _$RateCounter {
       stitchRate: 0,
       stitches: getstitches(ItemKey.stitch),
       heads: getstitches(ItemKey.head),
-      addOnPrice: 0);
+      addOnPrice: 0,
+      
+      );
 
-  Map<dynamic, double> get totals => {
-        for (var key in nameKeys) key : (state.stitchRate * (state.stitches[key] ?? 0.0) * (state.heads[key] ?? 0.0))/100
-      };
-  // double get finalTotal => {
-  //   for
-  // }
-
+  Map<dynamic, double> get totels => state.totals;
+ 
   Map<dynamic, double> getstitches(var valueKey) {
     Map<dynamic, double> map = {};
     for (Map<dynamic, dynamic> item in kItems) {
@@ -29,4 +26,17 @@ class RateCounter extends _$RateCounter {
     }
     return map;
   }
+
+  double calculateTotalPrice() {
+
+    // for(var e in totels) totalprice+= 
+    double totalPrice = items.fold(0.0, (sum, item) {
+      double stitches = item['stitches'] + .0;
+      double head = item['head'] + .0;
+      return sum + (stitches * head * stitchRate) / 100;
+    });
+
+    return totalPrice + addOnPrice;
+  }
+
 }

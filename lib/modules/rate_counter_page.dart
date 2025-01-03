@@ -159,7 +159,7 @@ class _RateCounterPageState extends State<RateCounterPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(item['name']),
+                          child: Text(item[ItemKey.name]),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),

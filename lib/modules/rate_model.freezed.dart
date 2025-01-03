@@ -144,14 +144,15 @@ class __$$RateModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$RateModelImpl implements _RateModel {
+class _$RateModelImpl extends _RateModel {
   const _$RateModelImpl(
       {required this.stitchRate,
       required final Map<dynamic, double> stitches,
       required final Map<dynamic, double> heads,
       required this.addOnPrice})
       : _stitches = stitches,
-        _heads = heads;
+        _heads = heads,
+        super._();
 
   factory _$RateModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RateModelImplFromJson(json);
@@ -220,12 +221,13 @@ class _$RateModelImpl implements _RateModel {
   }
 }
 
-abstract class _RateModel implements RateModel {
+abstract class _RateModel extends RateModel {
   const factory _RateModel(
       {required final double stitchRate,
       required final Map<dynamic, double> stitches,
       required final Map<dynamic, double> heads,
       required final double addOnPrice}) = _$RateModelImpl;
+  const _RateModel._() : super._();
 
   factory _RateModel.fromJson(Map<String, dynamic> json) =
       _$RateModelImpl.fromJson;
