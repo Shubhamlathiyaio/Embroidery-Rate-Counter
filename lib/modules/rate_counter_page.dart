@@ -1,6 +1,8 @@
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
 import 'package:embroidery_rate_counter/modules/rate_counter_provider.dart';
+import 'package:embroidery_rate_counter/widgets/comman_arrows_input_field.dart';
 import 'package:embroidery_rate_counter/widgets/comman_number_field.dart';
+import 'package:embroidery_rate_counter/widgets/common_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,7 +21,7 @@ class RateCounterPage extends ConsumerWidget {
 
     final List<Map<Titles, dynamic>> items = kItems;
     return Scaffold(
-      appBar: AppBar(title: Text('Embroidery Rate Counter')),
+      appBar: AppBar(title: const Text('Embroidery Rate Counter')),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -32,16 +34,12 @@ class RateCounterPage extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
-              // arrowInputField(
-              //   stitchRateController,
-              //   () {
-              //     setState(() {
-              //       double currentValue =
-              //           double.tryParse(stitchRateController.text) ?? 0;
-              //       stitchRateController.text = (currentValue + 1).toString();
-              //     });
-              //   },
-              // ),
+              CommanArrowsInputField(
+                value: rateCounterData.stitchRate,
+                onChanged: (newValue) => ref
+                    .read(rateCounterProvider.notifier)
+                    .updateStichesRate(newValue),
+              ),
               const SizedBox(height: 16),
               Table(
                 border: TableBorder.all(color: Colors.black26),
@@ -52,61 +50,47 @@ class RateCounterPage extends ConsumerWidget {
                   3: FractionColumnWidth(0.2),
                 },
                 children: [
-                  const TableRow(
+                  TableRow(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Name',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Enter Stitches',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Enter Head',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Total Price',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
+                      CommonText(data: 'Name', fontWeight: FontWeight.bold),
+                      CommonText(
+                          data: 'Enter Stitches', fontWeight: FontWeight.bold),
+                      CommonText(
+                          data: 'Enter Head', fontWeight: FontWeight.bold),
+                      CommonText(
+                          data: 'Total Price', fontWeight: FontWeight.bold),
                     ],
                   ),
-                  ...items.map((item) {
+                  ...itemKeys.map((e) {
                     return TableRow(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(item[Titles.name].toString()),
+                        CommonText(
+                          data: itemsName[e].toString(),
+                          allPadding: 8,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CommonNumberField(
-                            label: 'Stitches',
-                            value: item[Titles.stitch],
+                            value:
+                                ref.watch(rateCounterProvider).stitches[e] ?? 0,
                             onChanged: (newValue) => ref
                                 .read(rateCounterProvider.notifier)
-                                .setStiches(item[Titles.name], newValue),
+                                .updateStiches(e, newValue),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CommonNumberField(
-                            label: 'Head',
-                            value: item[Titles.head],
-                            onChanged: (newValue)  => ref
+                            value: ref.watch(rateCounterProvider).heads[e] ?? 0,
+                            onChanged: (newValue) => ref
                                 .read(rateCounterProvider.notifier)
-                                .setStiches(item[Titles.name], newValue),
+                                .updateHeads(e, newValue),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '₹${((item[Titles.stitch] * item[Titles.head] * (double.tryParse(stitchRateController.text) ?? 0)) / 100).toStringAsFixed(2)}',
+                            '₹ ${ref.watch(rateCounterProvider).totals[e]!.toStringAsFixed(2)}',
                           ),
                         ),
                       ],
@@ -120,24 +104,20 @@ class RateCounterPage extends ConsumerWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              // arrowInputField(
-              //   addOnController,
-              //   () {
-              //     setState(() {
-              //       double currentValue =
-              //           double.tryParse(addOnController.text) ?? 0;
-              //       addOnController.text = (currentValue + 1).toString();
-              //     });
-              //   },
-              // ),
+              CommanArrowsInputField(
+                value: rateCounterData.addOnPrice,
+                onChanged: (newValue) => ref
+                    .read(rateCounterProvider.notifier)
+                    .updateAddOnPrice(newValue),
+              ),
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16.0),
                 color: Colors.blue,
-                child: Text(
+                child: const Text(
                   "",
                   // 'Total Price: ₹${calculateTotalPrice().toStringAsFixed(2)}',
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),

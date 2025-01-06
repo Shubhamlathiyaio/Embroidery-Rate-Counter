@@ -1,5 +1,6 @@
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
 import 'package:embroidery_rate_counter/modules/rate_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'rate_counter_provider.g.dart';
@@ -8,7 +9,7 @@ part 'rate_counter_provider.g.dart';
 class RateCounter extends _$RateCounter {
   @override
   RateModel build() => RateModel(
-        stitchRate: 0,
+        stitchRate: 8.5,
         stitches: getstitches(Titles.stitch),
         heads: getstitches(Titles.head),
         addOnPrice: 0,
@@ -32,8 +33,23 @@ class RateCounter extends _$RateCounter {
 
 // * methods
 
-  void setStiches(Items key, double newValue) {
-    state = state.copyWith(stitches: Map.of(state.stitches)..[key] = newValue,);
-    print(state.stitches);
+  void updateStichesRate(double newValue) {
+    state = state.copyWith(stitchRate: newValue);
+  }
+
+   void updateAddOnPrice(double newValue) {
+    state = state.copyWith(addOnPrice: newValue);
+  }
+
+  void updateStiches(Items key, double newValue) {
+    state = state.copyWith(
+      stitches: Map.of(state.stitches)..[key] = newValue,
+    );
+  }
+
+  void updateHeads(Items key, double newValue) {
+    state = state.copyWith(
+      heads: Map.of(state.heads)..[key] = newValue,
+    );
   }
 }

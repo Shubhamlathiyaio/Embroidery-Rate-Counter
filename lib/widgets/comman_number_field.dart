@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CommonNumberField extends StatelessWidget {
-  String label;
   double value;
   Function(double) onChanged;
   CommonNumberField(
-      {required this.label, required this.value, required this.onChanged, super.key});
+      {required this.value, required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class CommonNumberField extends StatelessWidget {
                   if (value > 0) onChanged(value - .1);
                 }),
           ],
-        ),
+        ),  
       ],
     );
   }

@@ -17,7 +17,14 @@ enum Titles {
 
 enum Items { cPallu, pallu, skt, blz }
 
-List nameKeys = [
+Map<Items, String> itemsName = {
+  Items.cPallu: "C Pallu",
+  Items.pallu: "Pallu",
+  Items.skt: "Skt",
+  Items.blz: "Blz",
+};
+
+List itemKeys = [
   Items.cPallu,
   Items.pallu,
   Items.skt,
