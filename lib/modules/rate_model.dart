@@ -15,9 +15,12 @@ class RateModel with _$RateModel {
 
  const RateModel._();
 
-Map<dynamic, double> get totals => {
-        for (var key in nameKeys) key : (stitchRate * (stitches[key] ?? 0.0) * (heads[key] ?? 0.0))/100
-      };
+  Map<dynamic, double> get totals => {
+    for (var key in nameKeys) key : (stitchRate * (stitches[key] ?? 0.0) * (heads[key] ?? 0.0))/100
+  };
+
+  double get totalPrice => totals.values.fold(0.0, (sum, value) => sum + value);
+
 
   factory RateModel.fromJson(Map<String, Object?> json) =>
       _$RateModelFromJson(json);

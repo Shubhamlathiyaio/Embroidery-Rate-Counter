@@ -70,13 +70,13 @@ target_link_libraries(flutter INTERFACE
 add_dependencies(flutter flutter_assemble)
 
 # === Flutter tool backend ===
-# _phony_ is a non-existent file to force this command to run every time,
+# _phony_ is a non-existent file to force this commond to run every time,
 # since currently there's no way to get a full input/output list from the
 # flutter tool.
-add_custom_command(
+add_custom_commond(
   OUTPUT ${FLUTTER_LIBRARY} ${FLUTTER_LIBRARY_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/_phony_
-  COMMAND ${CMAKE_COMMAND} -E env
+  commonD ${CMAKE_commonD} -E env
     ${FLUTTER_TOOL_ENVIRONMENT}
     "${FLUTTER_ROOT}/packages/flutter_tools/bin/tool_backend.sh"
       ${FLUTTER_TARGET_PLATFORM} ${CMAKE_BUILD_TYPE}

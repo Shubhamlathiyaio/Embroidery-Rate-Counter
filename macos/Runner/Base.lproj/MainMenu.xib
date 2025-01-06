@@ -46,7 +46,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem title="Hide Others" keyEquivalent="h" id="Vdr-fp-XzO">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" commond="YES"/>
                                 <connections>
                                     <action selector="hideOtherApplications:" target="-1" id="VT4-aY-XCT"/>
                                 </connections>
@@ -97,7 +97,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem title="Paste and Match Style" keyEquivalent="V" id="WeT-3V-zwk">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" commond="YES"/>
                                 <connections>
                                     <action selector="pasteAsPlainText:" target="-1" id="cEh-KX-wJQ"/>
                                 </connections>
@@ -124,7 +124,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Find and Replace…" tag="12" keyEquivalent="f" id="YEy-JH-Tfz">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" commond="YES"/>
                                             <connections>
                                                 <action selector="performFindPanelAction:" target="-1" id="WD3-Gg-5AJ"/>
                                             </connections>
@@ -290,7 +290,7 @@
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
                             <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" commond="YES"/>
                                 <connections>
                                     <action selector="toggleFullScreen:" target="-1" id="dU3-MA-1Rq"/>
                                 </connections>

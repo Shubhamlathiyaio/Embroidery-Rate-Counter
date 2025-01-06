@@ -8,35 +8,32 @@ part 'rate_counter_provider.g.dart';
 class RateCounter extends _$RateCounter {
   @override
   RateModel build() => RateModel(
-      stitchRate: 0,
-      stitches: getstitches(ItemKey.stitch),
-      heads: getstitches(ItemKey.head),
-      addOnPrice: 0,
-      
+        stitchRate: 0,
+        stitches: getstitches(Titles.stitch),
+        heads: getstitches(Titles.head),
+        addOnPrice: 0,
       );
-
-  Map<dynamic, double> get totels => state.totals;
- 
   Map<dynamic, double> getstitches(var valueKey) {
     Map<dynamic, double> map = {};
-    for (Map<dynamic, dynamic> item in kItems) {
-      dynamic name = item[ItemKey.name];
+    for (Map<Titles, dynamic> item in kItems) {
+      dynamic name = item[Titles.name];
       double stitche = item[valueKey];
       map.addAll({name: stitche});
     }
     return map;
   }
 
-  double calculateTotalPrice() {
+  double get stitchRage => state.stitchRate;
+  Map<dynamic, double> get stitches => state.stitches;
+  Map<dynamic, double> get heads => state.heads;
+  Map<dynamic, double> get totals => state.totals;
+  double get addOnPrice => state.addOnPrice;
+  double get totalPrice => state.totalPrice;
 
-    // for(var e in totels) totalprice+= 
-    double totalPrice = items.fold(0.0, (sum, item) {
-      double stitches = item['stitches'] + .0;
-      double head = item['head'] + .0;
-      return sum + (stitches * head * stitchRate) / 100;
-    });
+// * methods
 
-    return totalPrice + addOnPrice;
+  void setStiches(Items key, double newValue) {
+    state = state.copyWith(stitches: Map.of(state.stitches)..[key] = newValue,);
+    print(state.stitches);
   }
-
 }
