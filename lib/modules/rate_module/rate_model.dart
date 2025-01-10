@@ -7,6 +7,8 @@ part 'rate_model.g.dart';
 @freezed
 class RateModel with _$RateModel {
   const factory RateModel({
+    required String name,
+    required String description,
     required double stitchRate,
     required Map<dynamic, double> stitches,
     required Map<dynamic, double> heads,
