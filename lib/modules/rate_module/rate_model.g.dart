@@ -8,6 +8,8 @@ part of 'rate_model.dart';
 
 _$RateModelImpl _$$RateModelImplFromJson(Map<String, dynamic> json) =>
     _$RateModelImpl(
+      name: json['name'] as String,
+      description: json['description'] as String,
       stitchRate: (json['stitchRate'] as num).toDouble(),
       stitches: (json['stitches'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, (e as num).toDouble()),
@@ -20,6 +22,8 @@ _$RateModelImpl _$$RateModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$RateModelImplToJson(_$RateModelImpl instance) =>
     <String, dynamic>{
+      'name': instance.name,
+      'description': instance.description,
       'stitchRate': instance.stitchRate,
       'stitches': instance.stitches,
       'heads': instance.heads,

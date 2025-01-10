@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CommonText extends StatelessWidget {
   String data;
   Key? textKey;
-  double allPadding;
+  double? allPadding;
   double? topPadding;
   double? bottomPadding;
   double? leftPadding;
@@ -40,7 +40,7 @@ class CommonText extends StatelessWidget {
   CommonText({
     this.data = "",
     super.key,
-    this.allPadding = 8,
+    this.allPadding,
     this.topPadding,
     this.bottomPadding,
     this.leftPadding,
@@ -78,8 +78,7 @@ class CommonText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Padding(
+    return Padding(
       padding: EdgeInsets.only(
           top: topPadding ?? allPadding ?? 0,
           bottom: bottomPadding ?? allPadding ?? 0,
@@ -100,63 +99,38 @@ class CommonText extends StatelessWidget {
         ), // Line height as a multiplier
         style: TextStyle(
           // background: ,
-          // backgroundColor: null,
-          // color: Colors.black,
-          // decoration: TextDecoration.none,
-          // decorationColor: Colors.black,
-          // decorationStyle: TextDecorationStyle.solid,
-          // decorationThickness: null,
-          // fontFamily: ,
+          // backgroundColor: backgroundColor,
+          color: color,
+          decoration: decoration,
+          decorationColor: decorationColor,
+          decorationStyle: decorationStyle,
+          decorationThickness: decorationThickness,
+          fontFamily: fontFamily,
           // fontFamilyFallback: , if some fontFamily is not work so we can give it the List fontFabmily
           // fontFeatures: ,  unknown
           fontSize: fontSize,
-          // fontStyle: FontStyle.normal,
+          fontStyle: FontStyle.normal,
           //   fontVariations: [
           //   FontVariation('wght', 700), // Set weight to 700 (bold)       // It is use for some text styeles
           //   FontVariation('wdth', 75),  // Set width to 75% (condensed)   // https://www.youtube.com/watch?v=vwSlP7zCtxA&t=357s
           // ],
           fontWeight: fontWeight,
-          foreground: Paint(),
           //* inherit: true, // we doesn't need it It is alow to inherit new style if is it true [Defalut : true]
-          // leadingDistribution: TextLeadingDistribution.proportional,
-          // shadows: [
-          //   Shadow(
-          //     offset: Offset(4.0, 4.0), // Position of shadow
-          //     blurRadius: 10.0, // Blurring effect
-          //     color: Colors.grey, // Shadow color
-          //   ),
-          // ],
-          // textBaseline: TextBaseline.alphabetic,
-          // height: null, //? lineSpacing = height
-          // wordSpacing: null,
-          // letterSpacing: null,
+          leadingDistribution: TextLeadingDistribution.proportional,
+          shadows: shadows,
+          textBaseline: TextBaseline.alphabetic,
+          height: lineSpacing, //? lineSpacing = height
+          wordSpacing: wordSpacing,
+          letterSpacing: letterSpacing,
         ),
 
-        textAlign: textAlign,
+        textAlign: TextAlign.left,
         textDirection: textDirection,
         textHeightBehavior: textHeightBehavior,
-        textScaleFactor: textScaleFactor,
+        // textScaleFactor: textScaleFactor,
         textScaler: textScaler,
         textWidthBasis: textWidthBasis,
       ),
-    ));
-  }
-}
-
-class MyPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.blue // Set the color of the shape
-      ..style = PaintingStyle.fill // Set style to fill (other option: stroke)
-      ..strokeWidth = 5.0; // Set stroke width (if style is stroke)
-
-    // Draw a circle
-    canvas.drawCircle(Offset(size.width / 2, size.height / 2), 50, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+    );
   }
 }
