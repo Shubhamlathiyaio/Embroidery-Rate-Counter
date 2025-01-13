@@ -1,5 +1,4 @@
 import 'package:embroidery_rate_counter/modules/rate_module/rate_counter_page.dart';
-import 'package:embroidery_rate_counter/product_grid_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,8 +15,8 @@ class EmbroideryRateCounter extends StatelessWidget {
       title: 'Embroidery Rate Counter',
       theme: ThemeData(primarySwatch: Colors.blue),
       // home: ComanTextFild(),
-      // home: const RateCounterPage(),
-      home: const ProductGridPage(),
+      home: const RateCounterPage(),
+      // home: const ProductGridPage(),
     );
   }
 }

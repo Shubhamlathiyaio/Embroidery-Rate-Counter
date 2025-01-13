@@ -6,12 +6,12 @@ part 'embroidery_item.g.dart';
 @freezed
 class EmbroideryItem with _$EmbroideryItem {
   const factory EmbroideryItem({
-    final String name,
-    final int stitches,
-    double head,
+    required String name,
+    required int stitches,
+    required double head,
   }) = _EmbroideryItem;
 
   const EmbroideryItem._();
   factory EmbroideryItem.fromJson(Map<String, Object?> json) =>
-      _$EmbroideryItemlFromJson(json);
+      _$EmbroideryItemFromJson(json);
 }
