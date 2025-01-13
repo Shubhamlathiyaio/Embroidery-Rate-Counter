@@ -1,4 +1,5 @@
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/modules/stitche_module/stitche_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:embroidery_rate_counter/constans/colors_constans.dart';
@@ -7,57 +8,27 @@ import 'package:embroidery_rate_counter/widgets/common_arrows_input_field.dart';
 import 'package:embroidery_rate_counter/widgets/common_bottom_sheet_module/common_bottom_sheet.dart';
 import 'package:embroidery_rate_counter/widgets/common_text.dart';
 
-class RateCounterPage extends ConsumerStatefulWidget {
-  const RateCounterPage({super.key});
 
-  @override
-  _RateCounterPageState createState() => _RateCounterPageState();
-}
-
-class _RateCounterPageState extends ConsumerState<RateCounterPage> {
+class RateCounterPage extends StatelessWidget {
   late TextEditingController stitchRateController;
   late TextEditingController addOnPriceController;
   late Map<Items, TextEditingController> stitches = {};
   late Map<Items, TextEditingController> heads = {};
 
-  @override
-void initState() {
-  super.initState();
-  final rateProvider = ref.read(rateCounterProvider);
-
-  stitchRateController =
-      TextEditingController(text: rateProvider.rawStitchRate);
-  addOnPriceController =
-      TextEditingController(text: rateProvider.rawAddOnPrice);
-
-  for (Items key in itemKeys) {
-    final stitch = rateProvider.stitches.firstWhere((e) => e.key == key);
-    stitches[key] = TextEditingController(text: stitch.rawStitch);
-    heads[key] = TextEditingController(text: stitch.rawHead);
-  }
-}
-
-@override
-void didUpdateWidget(covariant RateCounterPage oldWidget) {
-  super.didUpdateWidget(oldWidget);
-
-  final rateProvider = ref.read(rateCounterProvider);
-
-  stitchRateController.text = rateProvider.rawStitchRate;
-  addOnPriceController.text = rateProvider.rawAddOnPrice;
-
-  for (Items key in itemKeys) {
-    final stitch = rateProvider.stitches.firstWhere((e) => e.key == key);
-    stitches[key]?.text = stitch.rawStitch;
-    heads[key]?.text = stitch.rawHead;
-  }
-}
 
 
   @override
 Widget build(BuildContext context) {
-  final rateProvider = ref.watch(rateCounterProvider);
-  final rateNotifier = ref.read(rateCounterProvider.notifier);
+  // stitchRateController =
+  //     TextEditingController(text: rateProvider.rawStitchRate);
+  // addOnPriceController =
+  //     TextEditingController(text: rateProvider.rawAddOnPrice);
+
+  // for (Items key in itemKeys) {
+  //   final stitch = rateProvider.stitches.firstWhere((e) => e.key == key);
+  //   stitches[key] = TextEditingController(text: stitch.rawStitch);
+  //   heads[key] = TextEditingController(text: stitch.rawHead);
+  // }
 
   double screenWidth = MediaQuery.of(context).size.width;
 
@@ -85,11 +56,14 @@ Widget build(BuildContext context) {
               color: lightBlack,
             ),
             SizedBox(height: 8),
+            Consumer(builder: (context, ref, child) {
+              return
             CommonArrowsInputField(controller: TextEditingController(),
-              value: rateProvider.rawStitchRate,
+              value: ref.watch(rateCounterProvider).rawStitchRate,
               onChanging: (newValue) =>
-                  rateNotifier.updateStitchesRate(newValue),
-            ),
+                  ref.watch(rateCounterProvider.notifier).updateStitchesRate(newValue),
+            );
+            },),
             const SizedBox(height: 16),
             Column(
               children: [
@@ -137,52 +111,27 @@ Widget build(BuildContext context) {
                     ),
                   ],
                 ),
-                ...rateProvider.stitches.map((e) {
-                  return Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: CommonText(
-                          color: darkPurpule,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          data: e.name.toString(),
-                          allPadding: 8,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CommonArrowsInputField(
-                            controller: TextEditingController(),value: e.rawStitch,
-                            onChanging: (newValue) =>
-                                rateNotifier.updateStiches(e.key, newValue),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CommonArrowsInputField(
-                            controller: TextEditingController(),value: e.rawHead,
-                            onChanging: (newValue) =>
-                                rateNotifier.updateHeads(e.key, newValue),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: CommonText(
-                          allPadding: 8,
-                          data: (rateProvider.stitchRate * e.stitch * e.head)
-                              .toStringAsFixed(2),
-                        ),
-                      ),
-                    ],
-                  );
-                }),
+                StitchRow(rowKey:Items.cPallu),
+        StitchRow(rowKey:Items.pallu),
+        StitchRow(rowKey:Items.skt),
+        StitchRow(rowKey:Items.blz),
+                
+//                 Consumer(
+//   builder: (context, ref, child) {
+//     final rateProvider = ref.watch(rateCounterProvider.notifier);
+
+//     return Column(
+//       children: [
+        
+
+//         // ...rateProvider.stitches.map((e) {
+//         //   return StitchRow(rowKey:e.key);
+//         // }),
+//       ],
+//     );
+//   },
+// ),
+
               ],
             ),
             const SizedBox(height: 16),
@@ -191,11 +140,13 @@ Widget build(BuildContext context) {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
+            Consumer(builder: (context, ref, child) {
+              return
             CommonArrowsInputField(controller: TextEditingController(),
-              value: rateProvider.rawAddOnPrice,
+              value: ref.watch(rateCounterProvider).rawAddOnPrice,
               onChanging: (newValue) =>
-                  rateNotifier.updateAddOnPrice(newValue),
-            ),
+                  ref.watch(rateCounterProvider.notifier).updateAddOnPrice(newValue),
+            );}),
             const SizedBox(height: 16),
           ],
         ),
@@ -205,19 +156,62 @@ Widget build(BuildContext context) {
   );
 }
 
-
-@override
-void dispose() {
-  stitchRateController.dispose();
-  addOnPriceController.dispose();
-  for (var controller in stitches.values) {
-    controller.dispose();
-  }
-  for (var controller in heads.values) {
-    controller.dispose();
-  }
-  super.dispose();
 }
+class StitchRow extends ConsumerWidget {
+  final rowKey;
+  StitchRow({required this.rowKey,super.key});
 
+  @override
+  Widget build(BuildContext context,  WidgetRef ref) {
+    final allDataProvider = ref.watch(rateCounterProvider);
+    final dataNotifire = ref.watch(rateCounterProvider.notifier);
 
+    StitcheModel rowDataProvider = allDataProvider.stitches.firstWhere((e) => e.key == rowKey);
+    return Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: CommonText(
+                  color: darkPurpule,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  data: rowDataProvider.name,
+                  allPadding: 8,
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CommonArrowsInputField(
+                    controller: TextEditingController(),
+                    value: rowDataProvider.rawStitch,
+                    onChanging: (newValue) =>
+                        dataNotifire.updateStiches(rowKey, newValue),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CommonArrowsInputField(
+                    controller: TextEditingController(),
+                    value: rowDataProvider.rawHead,
+                    onChanging: (newValue) =>
+                        dataNotifire.updateHeads(rowKey, newValue),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: CommonText(
+                  allPadding: 8,
+                  data: (ref.watch(rateCounterProvider).stitchRate * rowDataProvider.stitch * rowDataProvider.head)
+                      .toStringAsFixed(2),
+                ),
+              ),
+            ],
+          );
+  }
 }

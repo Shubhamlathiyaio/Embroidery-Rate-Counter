@@ -43,10 +43,13 @@ class _CommonArrowsInputFieldState extends State<CommonArrowsInputField> {
         textAlign: TextAlign.center,
         controller: widget.controller,
         keyboardType: TextInputType.number,
-        onChanged: (value) {
-          print(value);
-          widget.onChanging(value);  // Pass the updated value
-        },
+        // onChanged: (value) {
+        //   print(value);
+        //   widget.onChanging(value);  // Pass the updated value
+        // },
+        onEditingComplete: () => widget.onChanging,
+        onSubmitted: (value) => widget.onChanging,
+        onTapOutside: (event) => widget.onChanging,
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.grey[200], // Use the correct color constant

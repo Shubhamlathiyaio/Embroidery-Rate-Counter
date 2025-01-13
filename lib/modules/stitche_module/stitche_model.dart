@@ -18,9 +18,9 @@ class StitcheModel with _$StitcheModel {
   factory StitcheModel.fromJson(Map<String, Object?> json) =>
       _$StitcheModelFromJson(json);
 
-  static StitcheModel initial() {
+  static StitcheModel initial(Items key) {
     return StitcheModel(
-      key: Items.cPallu, // Example default
+      key: key, // Example default
       name: '',
       stitch: 0.0,
       head: 0.0,

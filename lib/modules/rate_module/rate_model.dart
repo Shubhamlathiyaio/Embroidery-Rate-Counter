@@ -28,14 +28,14 @@ class RateModel with _$RateModel {
       stitchRate: 0.0,
       rawStitchRate: '0.0',
       stitches: [
-        StitcheModel.initial().copyWith(
-            key: Items.cPallu, name: "C Pallu", head: 12, rawHead: "12.0"),
-        StitcheModel.initial()
-            .copyWith(key: Items.pallu, name: "Pallu", head: 7, rawHead: "7.0"),
-        StitcheModel.initial()
-            .copyWith(key: Items.skt, name: "Skt", head: 11, rawHead: "11.0"),
-        StitcheModel.initial()
-            .copyWith(key: Items.blz, name: "Blz", head: 1.5, rawHead: "1.5"),
+        StitcheModel.initial(Items.cPallu)
+            .copyWith( name: "C Pallu", head: 12, rawHead: "12.0"),
+        StitcheModel.initial(Items.pallu)
+            .copyWith( name: "Pallu", head: 7, rawHead: "7.0"),
+        StitcheModel.initial(Items.skt)
+            .copyWith( name: "Skt", head: 11, rawHead: "11.0"),
+        StitcheModel.initial(Items.blz)
+            .copyWith( name: "Blz", head: 1.5, rawHead: "1.5"),
       ], // Default value with initial StitcheModel
       addOnPrice: 0.0,
       rawAddOnPrice: '0.0',

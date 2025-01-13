@@ -15,7 +15,7 @@ class EmbroideryRateCounter extends StatelessWidget {
       title: 'Embroidery Rate Counter',
       theme: ThemeData(primarySwatch: Colors.blue),
       // home: ComanTextFild(),
-      home: const RateCounterPage(),
+      home: RateCounterPage(),
       // home: const ProductGridPage(),
     );
   }
