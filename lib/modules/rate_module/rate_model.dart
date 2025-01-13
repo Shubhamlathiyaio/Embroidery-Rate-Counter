@@ -1,4 +1,5 @@
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/modules/stitche_module/stitche_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'rate_model.freezed.dart';
@@ -7,25 +8,38 @@ part 'rate_model.g.dart';
 @freezed
 class RateModel with _$RateModel {
   const factory RateModel({
-    required String name,
-    required String description,
+    required String designName,
+    required String rawStitchRate,
     required double stitchRate,
-    required Map<dynamic, double> stitches,
-    required Map<dynamic, double> heads,
+    required List<StitcheModel> stitches,
+    required String rawAddOnPrice,
     required double addOnPrice,
+    required String description,
   }) = _RateModel;
-
-  const RateModel._();
-
-// for all totales
-  Map<dynamic, double> get totals => {
-        for (var key in itemKeys)
-          key: (stitchRate * (stitches[key] ?? 0.0) * (heads[key] ?? 0.0)) / 100
-      };
-
-// for final total
-  double get totalPrice => totals.values.fold(0.0, (sum, value) => sum + value);
-
   factory RateModel.fromJson(Map<String, Object?> json) =>
       _$RateModelFromJson(json);
+
+  // set totals => {for (var e in stitches) e.key: e.stitch * e.head};
+
+
+  static RateModel initial() {
+    return RateModel(
+      designName: '',
+      stitchRate: 0.0,
+      rawStitchRate: '0.0',
+      stitches: [
+        StitcheModel.initial().copyWith(
+            key: Items.cPallu, name: "C Pallu", head: 12, rawHead: "12.0"),
+        StitcheModel.initial()
+            .copyWith(key: Items.pallu, name: "Pallu", head: 7, rawHead: "7.0"),
+        StitcheModel.initial()
+            .copyWith(key: Items.skt, name: "Skt", head: 11, rawHead: "11.0"),
+        StitcheModel.initial()
+            .copyWith(key: Items.blz, name: "Blz", head: 1.5, rawHead: "1.5"),
+      ], // Default value with initial StitcheModel
+      addOnPrice: 0.0,
+      rawAddOnPrice: '0.0',
+      description: '',
+    );
+  }
 }

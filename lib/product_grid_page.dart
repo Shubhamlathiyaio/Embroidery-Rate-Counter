@@ -1,5 +1,6 @@
 import 'package:embroidery_rate_counter/constans/colors_constans.dart';
 import 'package:embroidery_rate_counter/constans/images_const.dart';
+import 'package:embroidery_rate_counter/modules/rate_module/rate_counter_page.dart';
 import 'package:flutter/material.dart';
 
 class ProductGridPage extends StatelessWidget {
@@ -35,7 +36,7 @@ class ProductGridPage extends StatelessWidget {
           const SizedBox(width: 8),
           IconButton(
             onPressed: () {
-              Navigator.push(context, AddDesign());
+              Navigator.push(context, MaterialPageRoute(builder: (context) => RateCounterPage()));
             },
             icon: const Icon(Icons.add, color: Colors.black),
           ),

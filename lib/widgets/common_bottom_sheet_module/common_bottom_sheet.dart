@@ -11,7 +11,7 @@ class CommonBottomSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final rateCounter = ref.watch(rateCounterProvider);
+    final rateProvider = ref.watch(rateCounterProvider);
     return Container(
       color: darkWhite,
       height: height / 4,
@@ -23,7 +23,8 @@ class CommonBottomSheet extends ConsumerWidget {
           children: [
             CommonText(data: 'Total  Stitches'),
             CommonText(
-              data: 'Total ₹ ${rateCounter.totalPrice.toStringAsFixed(2)}',
+              data:
+                  r"$50", //'Total ₹ \${rateCounter.totalPrice.toStringAsFixed(2)}',
               fontSize: 36,
               fontWeight: FontWeight.bold,
             ),
