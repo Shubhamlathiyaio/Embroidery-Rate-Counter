@@ -8,28 +8,27 @@ import 'package:embroidery_rate_counter/widgets/common_arrows_input_field.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/total_bottom_sheet.dart';
 import 'package:embroidery_rate_counter/widgets/common_text.dart';
 
-class AddDesign extends ConsumerWidget {
-
+class Calculator extends StatelessWidget {
   // Create controllers for stitch and head fields
   final Map<Items, TextEditingController> stitchControllers = {};
   final Map<Items, TextEditingController> headControllers = {};
-  final TextEditingController stitchRateController = TextEditingController();
+  final TextEditingController stitchRateController = TextEditingController(text: "0.35");
 
 
   controllerInit(){
     for (Items item in Items.values) {
-      for (var item in kItems) {
-        var stitchValue = item[Titles.stitch];
-        var headValue = item[Titles.head];
-        var itemName = item[Titles.name] as Items;
+    for (var item in kItems) {
+      var stitchValue = item[Titles.stitch];
+      var headValue = item[Titles.head];
+      var itemName = item[Titles.name] as Items;
 
-        stitchControllers[itemName] = TextEditingController(); //text: stitchValue.toString()
-        headControllers[itemName] = TextEditingController(text: headValue.toString());
-      }
-    }}
+      stitchControllers[itemName] = TextEditingController(); //text: stitchValue.toString()
+      headControllers[itemName] = TextEditingController(text: headValue.toString());
+    }
+  }}
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     controllerInit();
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -39,7 +38,7 @@ class AddDesign extends ConsumerWidget {
         backgroundColor: AppColor.darkPurple,
         centerTitle: true,
         title: CommonText(
-          data: '${ref.watch(rateCounterProvider).stitchRate}',
+          data: 'Embroidery Calculator',
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -125,7 +124,7 @@ class StitchRow extends ConsumerWidget {
     final dataNotifier = ref.watch(rateCounterProvider.notifier);
 
     final rowDataProvider = allDataProvider.stitches.firstWhere(
-          (e) => e.key == rowKey,
+      (e) => e.key == rowKey,
       orElse: () => StitcheModel.initial(rowKey),
     );
 

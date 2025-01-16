@@ -25,7 +25,7 @@ class RateModel with _$RateModel {
   static RateModel initial() {
     return RateModel(
       designName: '',
-      stitchRate: 0.0,
+      stitchRate: 0.35,
       rawStitchRate: '0.0',
       stitches: [
         StitcheModel.initial(Items.cPallu)

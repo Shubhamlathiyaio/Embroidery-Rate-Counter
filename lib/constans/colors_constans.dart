@@ -1,7 +1,11 @@
 import 'dart:ui';
 
-const Color lightBlack = Color(0xff3A4750);
-const Color bgColor = Color(0xffEBEAFF);
-const Color fildGrey = Color(0xffFfffff);
-const Color darkPurpule = Color(0xff9694FF);
-const Color darkWhite = Color(0xffFFFCFC);
+import 'package:flutter/material.dart';
+
+class AppColor {
+  static Color lightBlack = Color(0xff3A4750);
+  static Color bgColor = Color(0xffEBEAFF);
+  static Color fieldGrey = Color(0xffFfffff);
+  static Color darkPurple = Color(0xff9694FF);
+  static Color darkWhite = Color(0xffFFFCFC);
+}

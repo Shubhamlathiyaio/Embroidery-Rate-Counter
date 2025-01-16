@@ -65,11 +65,13 @@ class RateCounter extends _$RateCounter {
     state = state.copyWith(stitches: [
       for (StitcheModel e in stitches)
         if (e.key == key) e.copyWith(rawStitch: value)
+      else e
     ]);
     if (double.tryParse(value) != null) {
       state = state.copyWith(stitches: [
         for (StitcheModel e in stitches)
           if (e.key == key) e.copyWith(stitch: double.parse(value))
+        else e
       ]);
       print(state.stitches);
     }
@@ -79,11 +81,13 @@ class RateCounter extends _$RateCounter {
     state = state.copyWith(stitches: [
       for (StitcheModel e in stitches)
         if (e.key == key) e.copyWith(rawHead: value)
+        else e
     ]);
     if (double.tryParse(value) != null) {
       state = state.copyWith(stitches: [
         for (StitcheModel e in stitches)
           if (e.key == key) e.copyWith(head: double.parse(value))
+          else e
       ]);
       print(state.stitches);
     }

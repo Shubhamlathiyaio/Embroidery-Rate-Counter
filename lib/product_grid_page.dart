@@ -1,6 +1,7 @@
+import 'package:embroidery_rate_counter/add_design.dart';
 import 'package:embroidery_rate_counter/constans/colors_constans.dart';
 import 'package:embroidery_rate_counter/constans/images_const.dart';
-import 'package:embroidery_rate_counter/modules/rate_module/rate_counter_page.dart';
+import 'package:embroidery_rate_counter/modules/rate_module/calculator.dart';
 import 'package:flutter/material.dart';
 
 class ProductGridPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class ProductGridPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: AppColor.bgColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -36,7 +37,7 @@ class ProductGridPage extends StatelessWidget {
           const SizedBox(width: 8),
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => RateCounterPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AddDesign()));
             },
             icon: const Icon(Icons.add, color: Colors.black),
           ),
@@ -111,5 +112,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
-void main() => runApp(const MaterialApp(home: ProductGridPage()));

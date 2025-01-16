@@ -4,8 +4,8 @@ import 'package:embroidery_rate_counter/widgets/common_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CommonBottomSheet extends ConsumerWidget {
-  const CommonBottomSheet({super.key});
+class TotalBottomSheet extends ConsumerWidget {
+  const TotalBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,7 +13,7 @@ class CommonBottomSheet extends ConsumerWidget {
     double width = MediaQuery.of(context).size.width;
     final rateProvider = ref.watch(rateCounterProvider);
     return Container(
-      color: darkWhite,
+      color: AppColor.darkWhite,
       height: height / 4,
       // width: double.infinity,
       child: Padding(

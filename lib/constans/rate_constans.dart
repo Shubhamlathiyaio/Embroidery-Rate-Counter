@@ -6,14 +6,9 @@ List<Map<Titles, dynamic>> kItems = [
 ];
 
 enum Titles {
-  name('name'),
-  stitch('stitch'),
-  head('head');
-
-  final String value;
-
-  const Titles(this.value);
-}
+  name,
+  stitch,
+  head}
 
 enum Items { cPallu, pallu, skt, blz }
 
