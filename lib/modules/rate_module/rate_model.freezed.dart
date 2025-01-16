@@ -21,10 +21,8 @@ RateModel _$RateModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RateModel {
   String get designName => throw _privateConstructorUsedError;
-  String get rawStitchRate => throw _privateConstructorUsedError;
   double get stitchRate => throw _privateConstructorUsedError;
-  List<StitcheModel> get stitches => throw _privateConstructorUsedError;
-  String get rawAddOnPrice => throw _privateConstructorUsedError;
+  List<StitchModel> get stitches => throw _privateConstructorUsedError;
   double get addOnPrice => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
 
@@ -45,10 +43,8 @@ abstract class $RateModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String designName,
-      String rawStitchRate,
       double stitchRate,
-      List<StitcheModel> stitches,
-      String rawAddOnPrice,
+      List<StitchModel> stitches,
       double addOnPrice,
       String description});
 }
@@ -69,10 +65,8 @@ class _$RateModelCopyWithImpl<$Res, $Val extends RateModel>
   @override
   $Res call({
     Object? designName = null,
-    Object? rawStitchRate = null,
     Object? stitchRate = null,
     Object? stitches = null,
-    Object? rawAddOnPrice = null,
     Object? addOnPrice = null,
     Object? description = null,
   }) {
@@ -81,10 +75,6 @@ class _$RateModelCopyWithImpl<$Res, $Val extends RateModel>
           ? _value.designName
           : designName // ignore: cast_nullable_to_non_nullable
               as String,
-      rawStitchRate: null == rawStitchRate
-          ? _value.rawStitchRate
-          : rawStitchRate // ignore: cast_nullable_to_non_nullable
-              as String,
       stitchRate: null == stitchRate
           ? _value.stitchRate
           : stitchRate // ignore: cast_nullable_to_non_nullable
@@ -92,11 +82,7 @@ class _$RateModelCopyWithImpl<$Res, $Val extends RateModel>
       stitches: null == stitches
           ? _value.stitches
           : stitches // ignore: cast_nullable_to_non_nullable
-              as List<StitcheModel>,
-      rawAddOnPrice: null == rawAddOnPrice
-          ? _value.rawAddOnPrice
-          : rawAddOnPrice // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<StitchModel>,
       addOnPrice: null == addOnPrice
           ? _value.addOnPrice
           : addOnPrice // ignore: cast_nullable_to_non_nullable
@@ -119,10 +105,8 @@ abstract class _$$RateModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String designName,
-      String rawStitchRate,
       double stitchRate,
-      List<StitcheModel> stitches,
-      String rawAddOnPrice,
+      List<StitchModel> stitches,
       double addOnPrice,
       String description});
 }
@@ -141,10 +125,8 @@ class __$$RateModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? designName = null,
-    Object? rawStitchRate = null,
     Object? stitchRate = null,
     Object? stitches = null,
-    Object? rawAddOnPrice = null,
     Object? addOnPrice = null,
     Object? description = null,
   }) {
@@ -153,10 +135,6 @@ class __$$RateModelImplCopyWithImpl<$Res>
           ? _value.designName
           : designName // ignore: cast_nullable_to_non_nullable
               as String,
-      rawStitchRate: null == rawStitchRate
-          ? _value.rawStitchRate
-          : rawStitchRate // ignore: cast_nullable_to_non_nullable
-              as String,
       stitchRate: null == stitchRate
           ? _value.stitchRate
           : stitchRate // ignore: cast_nullable_to_non_nullable
@@ -164,11 +142,7 @@ class __$$RateModelImplCopyWithImpl<$Res>
       stitches: null == stitches
           ? _value._stitches
           : stitches // ignore: cast_nullable_to_non_nullable
-              as List<StitcheModel>,
-      rawAddOnPrice: null == rawAddOnPrice
-          ? _value.rawAddOnPrice
-          : rawAddOnPrice // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<StitchModel>,
       addOnPrice: null == addOnPrice
           ? _value.addOnPrice
           : addOnPrice // ignore: cast_nullable_to_non_nullable
@@ -186,10 +160,8 @@ class __$$RateModelImplCopyWithImpl<$Res>
 class _$RateModelImpl implements _RateModel {
   const _$RateModelImpl(
       {required this.designName,
-      required this.rawStitchRate,
       required this.stitchRate,
-      required final List<StitcheModel> stitches,
-      required this.rawAddOnPrice,
+      required final List<StitchModel> stitches,
       required this.addOnPrice,
       required this.description})
       : _stitches = stitches;
@@ -200,19 +172,15 @@ class _$RateModelImpl implements _RateModel {
   @override
   final String designName;
   @override
-  final String rawStitchRate;
-  @override
   final double stitchRate;
-  final List<StitcheModel> _stitches;
+  final List<StitchModel> _stitches;
   @override
-  List<StitcheModel> get stitches {
+  List<StitchModel> get stitches {
     if (_stitches is EqualUnmodifiableListView) return _stitches;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_stitches);
   }
 
-  @override
-  final String rawAddOnPrice;
   @override
   final double addOnPrice;
   @override
@@ -220,7 +188,7 @@ class _$RateModelImpl implements _RateModel {
 
   @override
   String toString() {
-    return 'RateModel(designName: $designName, rawStitchRate: $rawStitchRate, stitchRate: $stitchRate, stitches: $stitches, rawAddOnPrice: $rawAddOnPrice, addOnPrice: $addOnPrice, description: $description)';
+    return 'RateModel(designName: $designName, stitchRate: $stitchRate, stitches: $stitches, addOnPrice: $addOnPrice, description: $description)';
   }
 
   @override
@@ -230,13 +198,9 @@ class _$RateModelImpl implements _RateModel {
             other is _$RateModelImpl &&
             (identical(other.designName, designName) ||
                 other.designName == designName) &&
-            (identical(other.rawStitchRate, rawStitchRate) ||
-                other.rawStitchRate == rawStitchRate) &&
             (identical(other.stitchRate, stitchRate) ||
                 other.stitchRate == stitchRate) &&
             const DeepCollectionEquality().equals(other._stitches, _stitches) &&
-            (identical(other.rawAddOnPrice, rawAddOnPrice) ||
-                other.rawAddOnPrice == rawAddOnPrice) &&
             (identical(other.addOnPrice, addOnPrice) ||
                 other.addOnPrice == addOnPrice) &&
             (identical(other.description, description) ||
@@ -245,15 +209,8 @@ class _$RateModelImpl implements _RateModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      designName,
-      rawStitchRate,
-      stitchRate,
-      const DeepCollectionEquality().hash(_stitches),
-      rawAddOnPrice,
-      addOnPrice,
-      description);
+  int get hashCode => Object.hash(runtimeType, designName, stitchRate,
+      const DeepCollectionEquality().hash(_stitches), addOnPrice, description);
 
   /// Create a copy of RateModel
   /// with the given fields replaced by the non-null parameter values.
@@ -274,10 +231,8 @@ class _$RateModelImpl implements _RateModel {
 abstract class _RateModel implements RateModel {
   const factory _RateModel(
       {required final String designName,
-      required final String rawStitchRate,
       required final double stitchRate,
-      required final List<StitcheModel> stitches,
-      required final String rawAddOnPrice,
+      required final List<StitchModel> stitches,
       required final double addOnPrice,
       required final String description}) = _$RateModelImpl;
 
@@ -287,13 +242,9 @@ abstract class _RateModel implements RateModel {
   @override
   String get designName;
   @override
-  String get rawStitchRate;
-  @override
   double get stitchRate;
   @override
-  List<StitcheModel> get stitches;
-  @override
-  String get rawAddOnPrice;
+  List<StitchModel> get stitches;
   @override
   double get addOnPrice;
   @override

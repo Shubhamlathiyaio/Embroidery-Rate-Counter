@@ -1,5 +1,5 @@
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
-import 'package:embroidery_rate_counter/modules/stitche_module/stitche_model.dart';
+import 'package:embroidery_rate_counter/modules/stitch_module/stitch_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:embroidery_rate_counter/constans/colors_constans.dart';
@@ -13,6 +13,7 @@ class Calculator extends StatelessWidget {
   final Map<Items, TextEditingController> stitchControllers = {};
   final Map<Items, TextEditingController> headControllers = {};
   final TextEditingController stitchRateController = TextEditingController(text: "0.35");
+  final TextEditingController addOnController = TextEditingController(text: "0.0");
 
 
   controllerInit(){
@@ -59,7 +60,7 @@ class Calculator extends StatelessWidget {
               Consumer(builder: (context, ref, child) {
                 return CommonArrowsInputField(
                   controller: stitchRateController,
-                  value: ref.watch(rateCounterProvider).rawStitchRate,
+                  value: "0.0",
                   onChanging: (newValue) =>
                       ref.watch(rateCounterProvider.notifier).updateStitchesRate(newValue),
                 );
@@ -95,8 +96,8 @@ class Calculator extends StatelessWidget {
               const SizedBox(height: 8),
               Consumer(builder: (context, ref, child) {
                 return CommonArrowsInputField(
-                  controller: TextEditingController(),
-                  value: ref.watch(rateCounterProvider).rawAddOnPrice,
+                  controller: addOnController,
+                  value: "0.0",
                   onChanging: (newValue) =>
                       ref.watch(rateCounterProvider.notifier).updateAddOnPrice(newValue),
                 );
@@ -125,16 +126,16 @@ class StitchRow extends ConsumerWidget {
 
     final rowDataProvider = allDataProvider.stitches.firstWhere(
       (e) => e.key == rowKey,
-      orElse: () => StitcheModel.initial(rowKey),
+      orElse: () => StitchModel.initial(rowKey),
     );
 
     // Set the text of the controllers to the current values
-    if (stitchController.text != rowDataProvider.rawStitch) {
-      stitchController.text = rowDataProvider.rawStitch;
-    }
-    if (headController.text != rowDataProvider.rawHead) {
-      headController.text = rowDataProvider.rawHead;
-    }
+    // if (stitchController.text != rowDataProvider.rawStitch) {
+    //   stitchController.text = rowDataProvider.rawStitch;
+    // }
+    // if (headController.text != rowDataProvider.rawHead) {
+    //   headController.text = rowDataProvider.rawHead;
+    // }
 
     return Row(
       children: [
@@ -154,8 +155,8 @@ class StitchRow extends ConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             child: CommonArrowsInputField(
               controller: stitchController,
-              value: rowDataProvider.rawStitch,
-              onChanging: (newValue) => dataNotifier.updateStiches(rowKey, newValue),
+              value: "0.0",
+              onChanging: (newValue) => dataNotifier.updateStitch(rowKey, newValue),
             ),
           ),
         ),
@@ -165,7 +166,7 @@ class StitchRow extends ConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             child: CommonArrowsInputField(
               controller: headController,
-              value: rowDataProvider.rawHead,
+              value: "0.0",
               onChanging: (newValue) => dataNotifier.updateHeads(rowKey, newValue),
             ),
           ),
