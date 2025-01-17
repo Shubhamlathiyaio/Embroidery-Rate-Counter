@@ -1,4 +1,6 @@
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/modules/stitch_module/stitch_model.dart';
+import 'package:embroidery_rate_counter/widgets/extraField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:embroidery_rate_counter/constans/colors_constans.dart';
@@ -7,72 +9,85 @@ import 'package:embroidery_rate_counter/widgets/common_arrows_input_field.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/total_bottom_sheet.dart';
 import 'package:embroidery_rate_counter/widgets/common_text.dart';
 
-class AddDesign extends ConsumerWidget {
+class AddDesign extends StatelessWidget {
+  final Map<Items, TextEditingController> stitchControllers = {
+    for (var e in Items.values) e: TextEditingController()
+  };
+  final Map<Items, TextEditingController> headControllers = {
+    for (var e in kItems)
+      e[Titles.name]: TextEditingController(text: "${e[Titles.head]}")
+  };
+  final TextEditingController stitchRateController =
+      TextEditingController(text: "0.35");
+  final TextEditingController addOnController = TextEditingController();
 
-  // Create controllers for stitch and head fields
-  final Map<Items, TextEditingController> stitchControllers = {};
-  final Map<Items, TextEditingController> headControllers = {};
-  final TextEditingController stitchRateController = TextEditingController();
-
-
-  controllerInit(){
-    for (Items item in Items.values) {
-      for (var item in kItems) {
-        var stitchValue = item[Titles.stitch];
-        var headValue = item[Titles.head];
-        var itemName = item[Titles.name] as Items;
-
-        stitchControllers[itemName] = TextEditingController(); //text: stitchValue.toString()
-        headControllers[itemName] = TextEditingController(text: headValue.toString());
-      }
-    }}
+  AddDesign({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    controllerInit();
-    double screenWidth = MediaQuery.of(context).size.width;
-
+  Widget build(BuildContext context) {
+    print("=====================AddDesign build............");
     return Scaffold(
       backgroundColor: AppColor.bgColor,
       appBar: AppBar(
         backgroundColor: AppColor.darkPurple,
         centerTitle: true,
         title: CommonText(
-          data: '${ref.watch(rateCounterProvider).stitchRate}',
+          data: 'Embroidery Calculator',
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
-      ),
+      actions: [IconButton(onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AddDesign(),));
+      }, icon: Icon(Icons.save))],),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CommonText(
-                data: 'Stitch Rate:',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColor.lightBlack,
+              ExtraField(
+                text: "Stitch Rate :",
+                controller: stitchRateController,
+                onChanging: (rateConuter, value) =>
+                    rateConuter.updateStitchesRate(value),
               ),
-              SizedBox(height: 8),
-              Consumer(builder: (context, ref, child) {
-                return CommonArrowsInputField(
-                  controller: stitchRateController,
-                  value: "0.0",
-                  onChanging: (newValue) =>
-                      ref.watch(rateCounterProvider.notifier).updateStitchesRate(newValue),
-                );
-              }),
               const SizedBox(height: 16),
               Column(
                 children: [
                   Row(
                     children: [
-                      Expanded(flex: 2, child: CommonText(allPadding: 8, fontSize: 16, data: 'Name', fontWeight: FontWeight.bold, color: AppColor.lightBlack)),
-                      Expanded(flex: 3, child: CommonText(allPadding: 8, fontSize: 16, data: 'Stitches', fontWeight: FontWeight.bold, color: AppColor.lightBlack)),
-                      Expanded(flex: 3, child: CommonText(allPadding: 8, fontSize: 16, data: 'Head', fontWeight: FontWeight.bold, color: AppColor.lightBlack)),
-                      Expanded(flex: 2, child: CommonText(allPadding: 8, fontSize: 16, data: 'Total', fontWeight: FontWeight.bold, color: AppColor.lightBlack)),
+                      Expanded(
+                          flex: 2,
+                          child: CommonText(
+                              allPadding: 8,
+                              fontSize: 16,
+                              data: 'Name',
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.lightBlack)),
+                      Expanded(
+                          flex: 3,
+                          child: CommonText(
+                              allPadding: 8,
+                              fontSize: 16,
+                              data: 'Stitches',
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.lightBlack)),
+                      Expanded(
+                          flex: 3,
+                          child: CommonText(
+                              allPadding: 8,
+                              fontSize: 16,
+                              data: 'Head',
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.lightBlack)),
+                      Expanded(
+                          flex: 2,
+                          child: CommonText(
+                              allPadding: 8,
+                              fontSize: 16,
+                              data: 'Total',
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.lightBlack)),
                     ],
                   ),
                   Consumer(builder: (context, ref, child) {
@@ -91,16 +106,12 @@ class AddDesign extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              const Text('Add-on Price', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              Consumer(builder: (context, ref, child) {
-                return CommonArrowsInputField(
-                  controller: TextEditingController(),
-                  value: "0.0",
-                  onChanging: (newValue) =>
-                      ref.watch(rateCounterProvider.notifier).updateAddOnPrice(newValue),
-                );
-              }),
+              ExtraField(
+                text: 'Add on Price :',
+                controller: addOnController,
+                onChanging: (rateConuter, value) =>
+                    rateConuter.updateAddOnPrice(value),
+              ),
               const SizedBox(height: 16),
             ],
           ),
@@ -116,7 +127,11 @@ class StitchRow extends ConsumerWidget {
   final TextEditingController stitchController;
   final TextEditingController headController;
 
-  StitchRow({required this.rowKey, required this.stitchController, required this.headController, super.key});
+  const StitchRow(
+      {required this.rowKey,
+      required this.stitchController,
+      required this.headController,
+      super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -124,18 +139,9 @@ class StitchRow extends ConsumerWidget {
     final dataNotifier = ref.watch(rateCounterProvider.notifier);
 
     final rowDataProvider = allDataProvider.stitches.firstWhere(
-          (e) => e.key == rowKey,
-      // orElse: () => StitchModel.initial(rowKey),
+      (e) => e.key == rowKey,
+      orElse: () => StitchModel.initial(rowKey),
     );
-
-    // Set the text of the controllers to the current values
-    // if (stitchController.text != rowDataProvider.rawStitch) {
-    //   stitchController.text = rowDataProvider.rawStitch;
-    // }
-    // if (headController.text != rowDataProvider.rawHead) {
-    //   headController.text = rowDataProvider.rawHead;
-    // }
-
     return Row(
       children: [
         Expanded(
@@ -155,7 +161,8 @@ class StitchRow extends ConsumerWidget {
             child: CommonArrowsInputField(
               controller: stitchController,
               value: "0.0",
-              onChanging: (newValue) => dataNotifier.updateStitch(rowKey, newValue),
+              onChanging: (newValue) =>
+                  dataNotifier.updateStitch(rowKey, newValue),
             ),
           ),
         ),
@@ -166,7 +173,8 @@ class StitchRow extends ConsumerWidget {
             child: CommonArrowsInputField(
               controller: headController,
               value: "0.0",
-              onChanging: (newValue) => dataNotifier.updateHeads(rowKey, newValue),
+              onChanging: (newValue) =>
+                  dataNotifier.updateHeads(rowKey, newValue),
             ),
           ),
         ),
@@ -174,7 +182,9 @@ class StitchRow extends ConsumerWidget {
           flex: 2,
           child: CommonText(
             allPadding: 8,
-            data: (ref.watch(rateCounterProvider).stitchRate * rowDataProvider.stitch * rowDataProvider.head)
+            data: (ref.watch(rateCounterProvider).stitchRate *
+                    rowDataProvider.stitch *
+                    rowDataProvider.head)
                 .toStringAsFixed(2),
           ),
         ),
