@@ -90,8 +90,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
             await ref.read(rateCounterProvider.notifier).loadRateModel();
           } else if (_currentIndex != 1 && index == 1) {
             // Click on AddDesign
-            final designName =
-                await ref.read(rateCounterProvider.notifier).loadAddDesign();
+            await ref.read(rateCounterProvider.notifier).loadAddDesign();
           }
           setState(() {
             _currentIndex = index;
