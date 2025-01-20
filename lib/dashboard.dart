@@ -1,13 +1,10 @@
-import 'dart:convert';
 import 'package:embroidery_rate_counter/add_design.dart';
-import 'package:embroidery_rate_counter/constans/rate_constans.dart';
 import 'package:embroidery_rate_counter/calculator.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/rate_counter_provider.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/rate_model.dart';
 import 'package:embroidery_rate_counter/product_grid_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod/src/notifier.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
@@ -117,8 +114,4 @@ class _DashboardState extends ConsumerState<Dashboard> {
       ),
     );
   }
-}
-
-extension on AutoDisposeNotifierProviderImpl<RateCounter, RateModel> {
-  saveRateModel() {}
 }

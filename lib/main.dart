@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'package:embroidery_rate_counter/constans/colors_constans.dart';
 import 'package:embroidery_rate_counter/dashboard.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/rate_model.dart';
-import 'package:embroidery_rate_counter/widgets/common_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';

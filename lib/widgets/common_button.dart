@@ -7,7 +7,7 @@ class CommonButton extends StatelessWidget {
   Function onTap;
   double height;
   double width;
-  double outPading;
+  double outPadding;
   double radius;
   double fontSize;
   Color fontColor;
@@ -23,7 +23,7 @@ class CommonButton extends StatelessWidget {
       this.height = 60,
       this.width = 200,
       this.radius = 200,
-      this.outPading = 0,
+      this.outPadding = 0,
       this.topPadding = 0,
       this.bottomPadding = 0,
       this.leftPadding = 0,
@@ -36,10 +36,11 @@ class CommonButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          top: topPadding ?? outPading ?? 0,
-          bottom: bottomPadding ?? outPading ?? 0,
-          left: leftPadding ?? outPading ?? 0,
-          right: rightPadding ?? outPading ?? 0),
+          top: topPadding ?? outPadding,
+          bottom: bottomPadding ?? outPadding,
+          left: leftPadding ?? outPadding,
+          right: rightPadding ?? outPadding,
+      ),
       child: GestureDetector(onTap: () => onTap,
         child: Container(
           alignment: Alignment.center,

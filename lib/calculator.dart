@@ -1,6 +1,5 @@
 import 'package:embroidery_rate_counter/add_design.dart';
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
-import 'package:embroidery_rate_counter/modules/rate_module/rate_model.dart';
 import 'package:embroidery_rate_counter/widgets/stitch_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
