@@ -9,6 +9,7 @@ part 'rate_model.g.dart';
 @freezed
 class RateModel with _$RateModel {
   const factory RateModel({
+    required int designNumber,
     required String designName,
     required double stitchRate,
     required List<StitchModel> stitches,
@@ -23,6 +24,7 @@ class RateModel with _$RateModel {
 
   static RateModel initial() {
     return RateModel(
+      designNumber: 0,
       designName: '',
       stitchRate: 0.35,
       stitches: [

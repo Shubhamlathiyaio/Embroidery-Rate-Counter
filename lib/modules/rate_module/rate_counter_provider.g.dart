@@ -6,7 +6,7 @@ part of 'rate_counter_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$rateCounterHash() => r'db5e86107696875f6960940cff12d901703be771';
+String _$rateCounterHash() => r'0dea3b3503f77b9c7ebc5aa2a5592653e0e263bd';
 
 /// See also [RateCounter].
 @ProviderFor(RateCounter)

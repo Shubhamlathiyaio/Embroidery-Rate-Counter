@@ -1,4 +1,6 @@
+import 'package:embroidery_rate_counter/add_design.dart';
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/modules/rate_module/rate_model.dart';
 import 'package:embroidery_rate_counter/widgets/stitch_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,8 +10,8 @@ import 'package:embroidery_rate_counter/widgets/common_text.dart';
 import 'package:embroidery_rate_counter/widgets/extraField.dart';
 import 'package:embroidery_rate_counter/widgets/total_bottom_sheet.dart';
 
-class AddDesign extends StatelessWidget {
-  AddDesign({super.key});
+class Calculator extends StatelessWidget {
+  Calculator({super.key});
 
   final Map<Items, TextEditingController> stitchControllers = {
     for (var e in Items.values) e: TextEditingController()
@@ -20,10 +22,10 @@ class AddDesign extends StatelessWidget {
       e[Titles.name]: TextEditingController(text: "${e[Titles.head]}")
   };
 
-  TextEditingController stitchRateController = TextEditingController(text: "0.35");
+  TextEditingController stitchRateController =
+      TextEditingController(text: "0.35");
+
   TextEditingController addOnController = TextEditingController();
-  TextEditingController designNumber = TextEditingController();
-  TextEditingController designName = TextEditingController();
 
 // void getDataInFieald(final ref){
 //   RateModel rate = ref.watch(rateCounterProvider);
@@ -36,9 +38,6 @@ class AddDesign extends StatelessWidget {
 // }
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    double minSide = width > height ? height : width;
     return Consumer(builder: (context, ref, child) {
       return Scaffold(
         backgroundColor: AppColor.bgColor,
@@ -57,55 +56,6 @@ class AddDesign extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          ExtraFieldInColumn(
-                            value: '0',
-                            controller: designNumber,
-                            text: "Design No :",
-                            onChanging: (rateConuter, value) =>
-                                rateConuter.updateDesignNumber(value),
-                          ),
-                          const SizedBox(height: 8),
-                          ExtraFieldInColumn(
-                            value:"Design Name",
-                            textInputType: TextInputType.text,
-                            controller: designName,
-                            text: "Design Name :",
-                            onChanging: (rateConuter, value) =>
-                                rateConuter.updateDesignName(value),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 30,),
-                    Padding(
-                      padding: EdgeInsets.all(12),
-                      child: GestureDetector(onTap: () => showDialog(barrierDismissible: false,context: context, builder: (context) => AlertDialog(title: Text("Choose the Image"),actions: [TextButton(onPressed: () {
-                          Navigator.pop(context);
-                        }, child: Text("Camera")),TextButton(onPressed: () {
-                          
-                          Navigator.pop(context);
-                        }, child: Text("Gallery"))],),),
-                        child: SizedBox(
-                          height: minSide / 3,
-                          width: minSide / 3,
-                          child: CircleAvatar(
-                            backgroundColor: AppColor.darkPurple,
-                            child: Icon(
-                              Icons.camera_alt,
-                              size: minSide / 8,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 16),
                 ExtraFieldInRow(
                   controller: stitchRateController,
                   text: "Stitch Rate :",
@@ -164,7 +114,7 @@ class AddDesign extends StatelessWidget {
         bottomNavigationBar: Consumer(
           builder: (context, ref, child) {
             final rate = ref.watch(rateCounterProvider);
-            return TotalBottomSheet(onTap: (){},
+            return TotalBottomSheet(onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => AddDesign(),)),
               total: (rate.stitches.fold(
                           0.0,
                           (sum, e) =>

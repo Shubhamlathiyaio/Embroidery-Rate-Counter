@@ -20,6 +20,7 @@ RateModel _$RateModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RateModel {
+  int get designNumber => throw _privateConstructorUsedError;
   String get designName => throw _privateConstructorUsedError;
   double get stitchRate => throw _privateConstructorUsedError;
   List<StitchModel> get stitches => throw _privateConstructorUsedError;
@@ -42,7 +43,8 @@ abstract class $RateModelCopyWith<$Res> {
       _$RateModelCopyWithImpl<$Res, RateModel>;
   @useResult
   $Res call(
-      {String designName,
+      {int designNumber,
+      String designName,
       double stitchRate,
       List<StitchModel> stitches,
       double addOnPrice,
@@ -64,6 +66,7 @@ class _$RateModelCopyWithImpl<$Res, $Val extends RateModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? designNumber = null,
     Object? designName = null,
     Object? stitchRate = null,
     Object? stitches = null,
@@ -71,6 +74,10 @@ class _$RateModelCopyWithImpl<$Res, $Val extends RateModel>
     Object? description = null,
   }) {
     return _then(_value.copyWith(
+      designNumber: null == designNumber
+          ? _value.designNumber
+          : designNumber // ignore: cast_nullable_to_non_nullable
+              as int,
       designName: null == designName
           ? _value.designName
           : designName // ignore: cast_nullable_to_non_nullable
@@ -104,7 +111,8 @@ abstract class _$$RateModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String designName,
+      {int designNumber,
+      String designName,
       double stitchRate,
       List<StitchModel> stitches,
       double addOnPrice,
@@ -124,6 +132,7 @@ class __$$RateModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? designNumber = null,
     Object? designName = null,
     Object? stitchRate = null,
     Object? stitches = null,
@@ -131,6 +140,10 @@ class __$$RateModelImplCopyWithImpl<$Res>
     Object? description = null,
   }) {
     return _then(_$RateModelImpl(
+      designNumber: null == designNumber
+          ? _value.designNumber
+          : designNumber // ignore: cast_nullable_to_non_nullable
+              as int,
       designName: null == designName
           ? _value.designName
           : designName // ignore: cast_nullable_to_non_nullable
@@ -159,7 +172,8 @@ class __$$RateModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RateModelImpl implements _RateModel {
   const _$RateModelImpl(
-      {required this.designName,
+      {required this.designNumber,
+      required this.designName,
       required this.stitchRate,
       required final List<StitchModel> stitches,
       required this.addOnPrice,
@@ -169,6 +183,8 @@ class _$RateModelImpl implements _RateModel {
   factory _$RateModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RateModelImplFromJson(json);
 
+  @override
+  final int designNumber;
   @override
   final String designName;
   @override
@@ -188,7 +204,7 @@ class _$RateModelImpl implements _RateModel {
 
   @override
   String toString() {
-    return 'RateModel(designName: $designName, stitchRate: $stitchRate, stitches: $stitches, addOnPrice: $addOnPrice, description: $description)';
+    return 'RateModel(designNumber: $designNumber, designName: $designName, stitchRate: $stitchRate, stitches: $stitches, addOnPrice: $addOnPrice, description: $description)';
   }
 
   @override
@@ -196,6 +212,8 @@ class _$RateModelImpl implements _RateModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RateModelImpl &&
+            (identical(other.designNumber, designNumber) ||
+                other.designNumber == designNumber) &&
             (identical(other.designName, designName) ||
                 other.designName == designName) &&
             (identical(other.stitchRate, stitchRate) ||
@@ -209,8 +227,14 @@ class _$RateModelImpl implements _RateModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, designName, stitchRate,
-      const DeepCollectionEquality().hash(_stitches), addOnPrice, description);
+  int get hashCode => Object.hash(
+      runtimeType,
+      designNumber,
+      designName,
+      stitchRate,
+      const DeepCollectionEquality().hash(_stitches),
+      addOnPrice,
+      description);
 
   /// Create a copy of RateModel
   /// with the given fields replaced by the non-null parameter values.
@@ -230,7 +254,8 @@ class _$RateModelImpl implements _RateModel {
 
 abstract class _RateModel implements RateModel {
   const factory _RateModel(
-      {required final String designName,
+      {required final int designNumber,
+      required final String designName,
       required final double stitchRate,
       required final List<StitchModel> stitches,
       required final double addOnPrice,
@@ -239,6 +264,8 @@ abstract class _RateModel implements RateModel {
   factory _RateModel.fromJson(Map<String, dynamic> json) =
       _$RateModelImpl.fromJson;
 
+  @override
+  int get designNumber;
   @override
   String get designName;
   @override

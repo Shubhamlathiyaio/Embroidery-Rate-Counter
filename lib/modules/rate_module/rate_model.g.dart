@@ -8,6 +8,7 @@ part of 'rate_model.dart';
 
 _$RateModelImpl _$$RateModelImplFromJson(Map<String, dynamic> json) =>
     _$RateModelImpl(
+      designNumber: (json['designNumber'] as num).toInt(),
       designName: json['designName'] as String,
       stitchRate: (json['stitchRate'] as num).toDouble(),
       stitches: (json['stitches'] as List<dynamic>)
@@ -19,6 +20,7 @@ _$RateModelImpl _$$RateModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$RateModelImplToJson(_$RateModelImpl instance) =>
     <String, dynamic>{
+      'designNumber': instance.designNumber,
       'designName': instance.designName,
       'stitchRate': instance.stitchRate,
       'stitches': instance.stitches,
