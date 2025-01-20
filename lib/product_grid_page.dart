@@ -1,7 +1,6 @@
 import 'package:embroidery_rate_counter/add_design.dart';
 import 'package:embroidery_rate_counter/constans/colors_constans.dart';
 import 'package:embroidery_rate_counter/constans/images_const.dart';
-import 'package:embroidery_rate_counter/modules/rate_module/calculator.dart';
 import 'package:flutter/material.dart';
 
 class ProductGridPage extends StatelessWidget {

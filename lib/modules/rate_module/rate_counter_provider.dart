@@ -29,10 +29,13 @@ class RateCounter extends _$RateCounter {
       designName: newRateModel.designName,
       stitchRate: newRateModel.stitchRate,
       addOnPrice: newRateModel.addOnPrice,
-      stitches: newRateModel.stitches,
+      stitches: [for(StitchModel stitch in state.stitches) stitch.copyWith(head: newRateModel.stitches.firstWhere((e) => e.key==stitch.key).head,
+      stitch: newRateModel.stitches.firstWhere((e) => e.key==stitch.key).stitch)],
     );
     print("fffffffff${state.stitches[0].stitch}");
   }
+
+  void updateStitchModel(StitchModel newStitchModel){}
 
   double getTotal() => ([for (var e in stitches) e.head * e.stitch * stitchRate]
           .fold(0.0, (sum, v) => sum + v) +
@@ -40,13 +43,11 @@ class RateCounter extends _$RateCounter {
   String getTotalAsString() => getTotal().toStringAsFixed(2);
 
   void updateStitchesRate(String value) {
-    if (double.tryParse(value) != null)
-      state = state.copyWith(stitchRate: double.parse(value));
+    if (double.tryParse(value) != null) state = state.copyWith(stitchRate: double.parse(value));
   }
 
   void updateAddOnPrice(String value) {
-    if (double.tryParse(value) != null)
-      state = state.copyWith(addOnPrice: double.parse(value));
+    if (double.tryParse(value) != null) state = state.copyWith(addOnPrice: double.parse(value));
   }
 
   void updateStitch(Items key, String value) {

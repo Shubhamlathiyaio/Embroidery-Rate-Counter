@@ -1,5 +1,6 @@
 import 'package:embroidery_rate_counter/add_design.dart';
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/dashboard.dart';
 import 'package:embroidery_rate_counter/modules/stitch_module/stitch_model.dart';
 import 'package:embroidery_rate_counter/widgets/extraField.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,20 @@ import 'package:embroidery_rate_counter/widgets/common_arrows_input_field.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/total_bottom_sheet.dart';
 import 'package:embroidery_rate_counter/widgets/common_text.dart';
 
-class Calculator extends StatelessWidget {
+class Calculator extends ConsumerStatefulWidget {
   Calculator({super.key});
 
+  @override
+  _CalculatorState createState() => _CalculatorState();
+}
+
+class _CalculatorState extends ConsumerState<Calculator> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ref.watch(rateCounterProvider.notifier).updateRateModel(cashCalculator);
+  }
   final Map<Items, TextEditingController> stitchControllers = {
     for (var e in Items.values) e: TextEditingController()
   };

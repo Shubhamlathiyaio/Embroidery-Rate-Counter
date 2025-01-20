@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:embroidery_rate_counter/add_design.dart';
-import 'package:embroidery_rate_counter/constans/rate_constans.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/calculator.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/rate_counter_provider.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/rate_model.dart';
@@ -15,12 +14,16 @@ class Dashboard extends ConsumerStatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
 }
+
 late RateModel cashCalculator;
-late RateModel chshAddDeign;
+late RateModel cashAddDeign;
+  late SharedPreferences prefs;
+
+enum prefKey { calculateData, addDesignData }
+
 class _DashboardState extends ConsumerState<Dashboard> {
   int _currentIndex = 0;
 
-  late SharedPreferences prefs;
 
   @override
   void initState() {
@@ -30,6 +33,21 @@ class _DashboardState extends ConsumerState<Dashboard> {
 
   Future<void> initPref() async {
     prefs = await SharedPreferences.getInstance();
+    print("cal = ${!prefs.containsKey("${prefKey.calculateData}")}");
+    print("add = ${!prefs.containsKey("${prefKey.addDesignData}")}");
+    if (!prefs.containsKey("${prefKey.calculateData}")) {
+      cashCalculator = RateModel.initial();
+      storeInPref(
+        "${prefKey.calculateData}",cashCalculator
+      );
+    }
+
+    if (!prefs.containsKey("${prefKey.addDesignData}")) {
+      cashAddDeign = RateModel.initial();
+      print("rateInit =*************** $cashAddDeign");
+      storeInPref("${prefKey.addDesignData}", cashAddDeign);
+      getFromPref("${prefKey.addDesignData}");
+    }
   }
 
   // Screens for each menu
@@ -39,36 +57,43 @@ class _DashboardState extends ConsumerState<Dashboard> {
     ProductGridPage(),
   ];
 
-  Future<void> storeOfCalculator() async {
-    final calculateData = ref.read(rateCounterProvider.notifier).getModel();
+  Future<void> storeInPref(String key, [RateModel? rateModel]) async {
+    RateModel calculateData =
+        rateModel ?? ref.read(rateCounterProvider.notifier).getModel();
     String calculateDataJson = json.encode(calculateData.toJson());
-    await prefs.setString('calculateData', calculateDataJson);
+    await prefs.setString(key, calculateDataJson);
   }
 
-  Future<void> getOfCalculator() async {
-    String? calculateDataJson = prefs.getString('calculateData');
+  Future<void> getFromPref(String key) async {
+    String? calculateDataJson = prefs.getString(key);
     if (calculateDataJson != null) {
       Map<String, dynamic> calculateDataMap = json.decode(calculateDataJson);
       cashCalculator = RateModel.fromJson(calculateDataMap);
       ref.read(rateCounterProvider.notifier).updateRateModel(cashCalculator);
-      print("+++++++++++++++++++++++++++${ref.read(rateCounterProvider).stitches[0].stitch}");
+      print(
+          "+++++++++++++++++++++++++++${ref.read(rateCounterProvider).stitches[0].stitch}");
     }
   }
 
-  Future<void> storeOfAddDesign() async {
-    final designData = ref.read(rateCounterProvider.notifier).getModel();
-    String designDataJson = json.encode(designData.toJson());
-    await prefs.setString('addDesignData', designDataJson);
-  }
-
-  Future<void> getOfAddDesign() async {
-    String? designDataJson = prefs.getString('addDesignData');
-    if (designDataJson != null) {
-      Map<String, dynamic> designDataMap = json.decode(designDataJson);
-      chshAddDeign = RateModel.fromJson(designDataMap);
-      ref.read(rateCounterProvider.notifier).updateRateModel(chshAddDeign);
-      print("+++++++++++++++++++++++++++${ref.read(rateCounterProvider).stitches[0].stitch}");
+  Future dataProvider(int index) {
+    if (_currentIndex == 0 && index != 0) {
+      // Click on !Calculator
+      storeInPref('${prefKey.addDesignData}');
+    } else if (_currentIndex == 1 && index != 1) {
+      // Click on !AddDesign
+      storeInPref('${prefKey.calculateData}');
     }
+    if (_currentIndex != 0 && index == 0) {
+      // Click on Calculator
+      getFromPref('${prefKey.calculateData}');
+    } else if (_currentIndex != 1 && index == 1) {
+      // Click on AddDesign
+      getFromPref('${prefKey.addDesignData}');
+    }
+    Future f = Future(
+      () => 0,
+    );
+    return f;
   }
 
   @override
@@ -78,25 +103,13 @@ class _DashboardState extends ConsumerState<Dashboard> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
-          if (_currentIndex == 0 && index != 0) {
-            // Click on !Calculator
-            storeOfCalculator();
-          }
-          if (_currentIndex != 0 && index == 0) {
-            // Click on Calculator
-            getOfCalculator();
-          }
-          if (_currentIndex == 1 && index != 1) {
-            // Click on !AddDesign
-            storeOfAddDesign();
-          }
-          if (_currentIndex != 1 && index == 1) {
-            // Click on AddDesign
-            getOfAddDesign();
-          }
-          setState(() {
-            _currentIndex = index;
-          });
+          dataProvider(index).then(
+            (value) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          );
         },
         items: const [
           BottomNavigationBarItem(
