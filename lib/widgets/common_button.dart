@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class CommonButton extends StatelessWidget {
   String text;
   Color color;
-  Function onTap;
   double height;
   double width;
   double outPadding;
@@ -19,7 +18,6 @@ class CommonButton extends StatelessWidget {
   CommonButton(
       {this.text = "Click",
       this.color = Colors.blue,
-      required this.onTap,
       this.height = 60,
       this.width = 200,
       this.radius = 200,
@@ -41,19 +39,17 @@ class CommonButton extends StatelessWidget {
           left: leftPadding ?? outPadding,
           right: rightPadding ?? outPadding,
       ),
-      child: GestureDetector(onTap: () => onTap,
-        child: Container(
-          alignment: Alignment.center,
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-              color: color, borderRadius: BorderRadius.circular(radius)),
-          child: CommonText(
-            data: text,
-            fontWeight: FontWeight.bold,
-            fontSize: fontSize,
-            color :fontColor
-          ),
+      child: Container(
+        alignment: Alignment.center,
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+            color: color, borderRadius: BorderRadius.circular(radius)),
+        child: CommonText(
+          data: text,
+          fontWeight: FontWeight.bold,
+          fontSize: fontSize,
+          color :fontColor
         ),
       ),
     );

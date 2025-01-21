@@ -1,4 +1,8 @@
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/dashboard.dart';
+import 'package:embroidery_rate_counter/main.dart';
+import 'package:embroidery_rate_counter/modules/rate_module/rate_model.dart';
+import 'package:embroidery_rate_counter/widgets/common_button.dart';
 import 'package:embroidery_rate_counter/widgets/stitch_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,11 +10,15 @@ import 'package:embroidery_rate_counter/constans/colors_constans.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/rate_counter_provider.dart';
 import 'package:embroidery_rate_counter/widgets/common_text.dart';
 import 'package:embroidery_rate_counter/widgets/extraField.dart';
-import 'package:embroidery_rate_counter/widgets/total_bottom_sheet.dart';
 
-class AddDesign extends StatelessWidget {
+class AddDesign extends StatefulWidget {
   AddDesign({super.key});
 
+  @override
+  State<AddDesign> createState() => _AddDesignState();
+}
+
+class _AddDesignState extends State<AddDesign> {
   final Map<Items, TextEditingController> stitchControllers = {
     for (var e in Items.values) e: TextEditingController()
   };
@@ -21,19 +29,27 @@ class AddDesign extends StatelessWidget {
   };
 
   TextEditingController stitchRateController = TextEditingController(text: "0.35");
+
   TextEditingController addOnController = TextEditingController();
+
   TextEditingController designNumber = TextEditingController();
+
   TextEditingController designName = TextEditingController();
 
-// void getDataInFieald(final ref){
-//   RateModel rate = ref.watch(rateCounterProvider);
-//   stitchRateController = TextEditingController(text: "${rate.stitchRate}");
-//   addOnController = TextEditingController(text: "${rate.addOnPrice}");
-//   for(var e in rate.stitches){
-//     stitchControllers[e.key] = TextEditingController(text: "${e.stitch}");
-//     headControllers[e.key] = TextEditingController(text: "${e.head}");
-//   }
-// }
+  @override
+  void initState() {
+    super.initState();
+     getDataInFieald();
+  }
+void getDataInFieald(){
+  stitchRateController = TextEditingController(text: "${currentModelData.stitchRate==0.0?"":currentModelData.stitchRate}");
+  addOnController = TextEditingController(text: "${currentModelData.addOnPrice==0.0?"":currentModelData.addOnPrice}");
+  for(var e in currentModelData.stitches){
+    stitchControllers[e.key] = TextEditingController(text: "${e.stitch==0.0?"":e.stitch}");
+    headControllers[e.key] = TextEditingController(text: "${e.head==0.0?"":e.head}");
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -161,19 +177,49 @@ class AddDesign extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: Consumer(
-          builder: (context, ref, child) {
-            final rate = ref.watch(rateCounterProvider);
-            return TotalBottomSheet(onTap: (){},
-              total: (rate.stitches.fold(
-                          0.0,
-                          (sum, e) =>
-                              sum + (e.stitch * e.head * rate.stitchRate)) +
-                      rate.addOnPrice)
-                  .toStringAsFixed(2),
-            );
-          },
-        ),
+        bottomNavigationBar: Container(
+            color: AppColor.darkWhite,
+            height: height * .19,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: height*.02,),
+                  CommonText(
+                    data: 'Total  Stitches',
+                    fontSize: 12,
+                    color: AppColor.fontBlack,
+                  ),
+                  Consumer(
+                    builder: (con, ref, child) {
+                      final rate = ref.watch(rateCounterProvider);
+                      return Expanded(
+                        child: CommonText(
+                          color: AppColor.fontBlack,
+                          data:
+                              '₹ ${(rate.stitches.fold(0.0, (sum, e) => sum + (e.stitch * e.head * rate.stitchRate)) + rate.addOnPrice).toStringAsFixed(2)}',
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
+                  ),
+                  GestureDetector(
+                    onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => AddDesign(),));},
+                    child: CommonButton(
+                        radius: 12,
+                        fontSize: 14,
+                        height: 55,
+                        width: double.infinity,
+                        bottomPadding: 10,
+                        text: 'Save',
+                        color: AppColor.darkPurple,
+                        fontColor: Colors.white),
+                  )
+                ],
+              ),
+            )),
       );
     });
   }

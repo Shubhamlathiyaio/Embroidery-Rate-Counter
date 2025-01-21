@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/main.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/rate_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../stitch_module/stitch_model.dart';
 
@@ -25,14 +24,12 @@ class RateCounter extends _$RateCounter {
   RateModel getModel() => state;
 
   Future<void> saveRateModel() async {
-    final prefs = await SharedPreferences.getInstance();
     final rateModelJson = jsonEncode(state.toJson());
-    await prefs.setString('rate_model', rateModelJson);
+    await prefs.setString(currentCashKey, rateModelJson);
   }
 
-  Future<void> loadRateModel() async {
-    final prefs = await SharedPreferences.getInstance();
-    final rateModelJson = prefs.getString('rate_model');
+  RateModel loadRateModel()  {
+    final rateModelJson = prefs.getString(currentCashKey);
     if (rateModelJson != null) {
       final loadedRateModel = RateModel.fromJson(jsonDecode(rateModelJson));
       state = loadedRateModel;
@@ -40,26 +37,7 @@ class RateCounter extends _$RateCounter {
       final newInitialization = jsonEncode(RateModel.initial());
       state = RateModel.fromJson(jsonDecode(newInitialization));
     }
-  }
-
-  Future<void> saveAddDesign() async {
-    final prefs = await SharedPreferences.getInstance();
-    final addDesignJson = jsonEncode(prefs.containsKey("add_design")
-        ? state.toJson()
-        : RateModel.initial().toJson());
-    await prefs.setString('add_design', addDesignJson);
-  }
-
-  Future<void> loadAddDesign() async {
-    final prefs = await SharedPreferences.getInstance();
-    final addDesignJson = prefs.getString('add_design');
-    if (addDesignJson != null) {
-      final loadeAddDesignModel = RateModel.fromJson(jsonDecode(addDesignJson));
-      state = loadeAddDesignModel;
-    } else {
-      final newInitialization = jsonEncode(RateModel.initial());
-      state = RateModel.fromJson(jsonDecode(newInitialization));
-    }
+    return state;
   }
 
   void updateRateModel(RateModel newRateModel) {
@@ -69,24 +47,29 @@ class RateCounter extends _$RateCounter {
       addOnPrice: newRateModel.addOnPrice,
       stitches: newRateModel.stitches,
     );
+    saveRateModel();
   }
 
 void updateDesignNumber(String value) {
     if (value.isEmpty) value = "0";
     if (int.tryParse(value) != null) state = state.copyWith(designNumber: int.parse(value));
+  saveRateModel();
   }
   void updateDesignName(String value) {
     state = state.copyWith(designName: value);
+  saveRateModel();
   }
 
   void updateStitchesRate(String value) {
     if (value.isEmpty) value = "0.0";
     if (double.tryParse(value) != null) state = state.copyWith(stitchRate: double.parse(value));
+    saveRateModel();
   }
 
   void updateAddOnPrice(String value) {
     if (value.isEmpty) value = "0.0";
     if (double.tryParse(value) != null) state = state.copyWith(addOnPrice: double.parse(value));
+    saveRateModel();
   }
 
   void updateStitch(Items key, String value) {
@@ -97,6 +80,7 @@ void updateDesignNumber(String value) {
           if (e.key == key) e.copyWith(stitch: double.parse(value)) else e
       ]);
     }
+    saveRateModel();
   }
 
   void updateHeads(Items key, String value) {
@@ -107,5 +91,6 @@ void updateDesignNumber(String value) {
           if (e.key == key) e.copyWith(head: double.parse(value)) else e
       ]);
     }
+    saveRateModel();
   }
 }

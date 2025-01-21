@@ -1,12 +1,10 @@
 import 'package:embroidery_rate_counter/constans/colors_constans.dart';
-import 'package:embroidery_rate_counter/widgets/common_button.dart';
 import 'package:embroidery_rate_counter/widgets/common_text.dart';
 import 'package:flutter/material.dart';
 
 class TotalBottomSheet extends StatelessWidget {
   final String total;
-  Function onTap;
-  TotalBottomSheet({required this.total, required this.onTap, super.key});
+  TotalBottomSheet({required this.total, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +34,6 @@ class TotalBottomSheet extends StatelessWidget {
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
-            ),
-            CommonButton(
-              radius: 12,
-              fontSize: 14,
-              height: 55,
-              width: double.infinity,
-              bottomPadding: 10,
-              text: 'Save',
-              color: AppColor.darkPurple,
-              fontColor: Colors.white,
-              onTap: onTap,
             ),
           ],
         ),

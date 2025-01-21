@@ -1,11 +1,11 @@
 import 'package:embroidery_rate_counter/add_design.dart';
 import 'package:embroidery_rate_counter/calculator.dart';
+import 'package:embroidery_rate_counter/constans/rate_constans.dart';
+import 'package:embroidery_rate_counter/main.dart';
 import 'package:embroidery_rate_counter/modules/rate_module/rate_counter_provider.dart';
-import 'package:embroidery_rate_counter/modules/rate_module/rate_model.dart';
 import 'package:embroidery_rate_counter/product_grid_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({super.key});
@@ -13,24 +13,8 @@ class Dashboard extends ConsumerStatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
 }
-
-late RateModel cashCalculator;
-late RateModel chshAddDeign;
-
 class _DashboardState extends ConsumerState<Dashboard> {
   int _currentIndex = 0;
-
-  late SharedPreferences prefs;
-
-  @override
-  void initState() {
-    super.initState();
-    initPref();
-  }
-
-  Future<void> initPref() async {
-    prefs = await SharedPreferences.getInstance();
-  }
 
   // Screens for each menu
   final List<Widget> _screens = [
@@ -71,30 +55,40 @@ class _DashboardState extends ConsumerState<Dashboard> {
   //   }
   // }
 
+bool isLoade =false;
+// firstDataInit()  {
+
+//     currentModelData =  ref.read(rateCounterProvider.notifier).loadRateModel();
+//     isLoade = false;
+//     setState(() {});
+//     print("isLoade = $isLoade");
+// }
   @override
   Widget build(BuildContext context) {
+    // firstDataInit();
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: isLoade ? Center(child: CircularProgressIndicator()) : _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (index) async {
+        onTap: (index)  {
+          final rateNotifire = ref.read(rateCounterProvider.notifier);
           if (_currentIndex == 0 && index != 0) {
             // Click on !Calculator
-            ref.read(rateCounterProvider.notifier).saveRateModel();
           } else if (_currentIndex == 1 && index != 1) {
             // Click on !AddDesign
-            ref.read(rateCounterProvider.notifier).saveAddDesign();
           }
-          if (_currentIndex != 0 && index == 0) {
+          if (index == 0) {
             // Click on Calculator
-            await ref.read(rateCounterProvider.notifier).loadRateModel();
-          } else if (_currentIndex != 1 && index == 1) {
+            currentCashKey = CashKey.calculate;
+          } else if (index == 1) {
             // Click on AddDesign
-            await ref.read(rateCounterProvider.notifier).loadAddDesign();
+            currentCashKey = CashKey.addDesign;
           }
-          setState(() {
-            _currentIndex = index;
-          });
+          currentModelData =  rateNotifire.loadRateModel();
+          
+              setState(() {
+                _currentIndex = index;
+              });
         },
         items: const [
           BottomNavigationBarItem(

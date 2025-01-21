@@ -1,3 +1,14 @@
+
+
+class CashKey {
+  final String value;
+  const CashKey._(this.value);
+  static const calculate = 'calculate';
+  static const addDesign = 'add_design';
+}
+
+String currentCashKey = CashKey.calculate;
+
 List<Map<Titles, dynamic>> kItems = [
   {Titles.name: Items.cPallu, Titles.stitch: 0.0, Titles.head: 1.5},
   {Titles.name: Items.pallu, Titles.stitch: 0.0, Titles.head: 7.0},
@@ -5,11 +16,7 @@ List<Map<Titles, dynamic>> kItems = [
   {Titles.name: Items.blz, Titles.stitch: 0.0, Titles.head: 1.5},
 ];
 
-enum Titles {
-  name,
-  stitch,
-  head}
-
+enum Titles {name, stitch,head}
 enum Items { cPallu, pallu, skt, blz }
 
 Map<Items, String> itemsName = {
